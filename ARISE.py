@@ -131,7 +131,6 @@ app.layout = html.Div([
     dcc.Graph(figure=bar_graph_hb_test)
 ])
 
+# Run the Dash app
 if __name__ == '__main__':
-    app.run_server(debug=True)
-
-pip install dash
+    app.run_server(debug=True, port=8050)
