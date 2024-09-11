@@ -24,9 +24,9 @@ logo3_path = '/assets/logo3.png'
 
 # Top bar with logos using correct image paths
 top_bar = html.Div([
-    html.Img(src=logo1_path, style={'height': '100%', 'width': '100%', 'float': 'left'}),
-    html.Img(src=logo3_path, style={'height': '100%', 'width': '100%', 'text-align': 'center'}),
-    html.Img(src=logo2_path, style={'height': '100%', 'width': '100%', 'float': 'right'})
+    html.Img(src=logo1_path, style={'height': '300%', 'width': '300%', 'float': 'left'}),
+    html.Img(src=logo3_path, style={'height': '300%', 'width': '300%', 'text-align': 'center'}),
+    html.Img(src=logo2_path, style={'height': '300%', 'width': '300%', 'float': 'right'})
 ], style={'display': 'flex', 'justify-content': 'space-between'})
 
 # Gauge for Total Number of Household Contacted
