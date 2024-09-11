@@ -24,9 +24,9 @@ logo3_path = '/assets/logo3.png'
 
 # Top bar with logos using correct image paths
 top_bar = html.Div([
-    html.Img(src=logo1_path, style={'height': '10%', 'width': '10%', 'float': 'left'}),
-    html.Img(src=logo3_path, style={'height': '10%', 'width': '10%', 'text-align': 'center'}),
-    html.Img(src=logo2_path, style={'height': '10%', 'width': '10%', 'float': 'right'})
+    html.Img(src=logo1_path, style={'height': '30%', 'width': '30%', 'float': 'left'}),
+    html.Img(src=logo3_path, style={'height': '30%', 'width': '30%', 'text-align': 'center'}),
+    html.Img(src=logo2_path, style={'height': '30%', 'width': '30%', 'float': 'right'})
 ], style={'display': 'flex', 'justify-content': 'space-between'})
 
 # Gauge for Total Number of Household Contacted
@@ -91,7 +91,7 @@ bar_chart_age_gender.update_layout(
     uniformtext_minsize=8,
     uniformtext_mode='hide',
     width=1000,  # Adjust width as needed (e.g., 1000 pixels)
-    height=700   # Adjust height as needed (e.g., 700 pixels)
+    height=800   # Adjust height as needed (e.g., 700 pixels)
 )
 
 # Progress Line Graph for Household Contacts across different Data Collectors
@@ -114,7 +114,7 @@ bar_graph_hb_test.update_layout(xaxis_title=None)
 bar_graph_hb_test.update_layout(
     xaxis_title="HB Agreement : Yes or No",
     width=800,  # Increase the width
-    height=600  # Increase the height
+    height=700  # Increase the height
 )
 
 # Layout of the Dash App
