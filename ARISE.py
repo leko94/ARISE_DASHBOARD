@@ -1,4 +1,3 @@
-
 import pandas as pd
 import dash
 import dash_core_components as dcc
@@ -6,24 +5,24 @@ import dash_html_components as html
 from dash.dependencies import Input, Output
 import plotly.express as px
 import plotly.graph_objs as go
-import os
+import logging
 
 # Initialize the Dash app
-app = dash.Dash(__name__, suppress_callback_exceptions=True)
+app = dash.Dash(__name__, suppress_callback_exceptions=True, assets_folder='assets')
 server = app.server  # Expose the server for WSGI
+
+# Enable logging
+logging.basicConfig(level=logging.DEBUG)
 
 # Load your CSV dataset
 data = pd.read_csv('Nutrint_Pilot.csv')
 
-# Create a Dash app
-app = dash.Dash(__name__)
+# Paths for images - make sure your images are placed in the 'assets' folder
+logo1_path = '/assets/logo1.png'
+logo2_path = '/assets/logo2.png'
+logo3_path = '/assets/logo3.png'
 
-# Get the absolute path for the images (make sure to use the correct file paths on your local system)
-logo1_path = 'logo1.png'
-logo2_path = 'logo2.png'
-logo3_path = 'logo3.png'
-
-# Top bar with logos using encoded image format to ensure they display correctly
+# Top bar with logos using correct image paths
 top_bar = html.Div([
     html.Img(src=logo1_path, style={'height': '10%', 'width': '10%', 'float': 'left'}),
     html.Img(src=logo3_path, style={'height': '10%', 'width': '10%', 'text-align': 'center'}),
@@ -76,7 +75,7 @@ labels = {1: 'Male', 2: 'Female'}
 data['gender'] = data['A2'].map(labels)
 
 # Calculate the counts of each gender within each age group
-age_gender_distribution = data.groupby(['age_group', 'gender']).size().reset_index(name='count')
+age_gender_distribution = data.groupby(['age_group', 'gender'], observed=False).size().reset_index(name='count')
 
 # Create the grouped bar chart with accurate count on the bars
 bar_chart_age_gender = px.bar(age_gender_distribution, x='age_group', y='count', color='gender',
@@ -133,4 +132,5 @@ app.layout = html.Div([
 
 # Run the Dash app
 if __name__ == '__main__':
-    app.run_server(debug=True, port=8050)
+    app.run_server(debug=False, port=8050)  # debug=False for production
+
