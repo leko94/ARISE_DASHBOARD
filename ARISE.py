@@ -59,11 +59,22 @@ pie_chart_gender.update_traces(text=gender_distribution.values, textposition='in
 bins = [10, 15, 20, 25]
 labels = ['10-14', '15-19', '20-24']
 data['age_group'] = pd.cut(data['A1'], bins=bins, labels=labels, right=False)
+
+# Count the number of participants in each age group
 age_group_count = data['age_group'].value_counts().sort_index()
-age_group_bar = px.bar(age_group_count, x=age_group_count.index, y=age_group_count.values,
+
+# Create the bar chart with the y-axis labeled as "Frequency"
+age_group_bar = px.bar(age_group_count, 
+                       x=age_group_count.index, 
+                       y=age_group_count.values,
                        title='The Adolescence Participated Age Group',
-                       labels={'x': 'Age Group', 'y': 'Frequency'})
+                       labels={'x': 'Age Group', 'y': 'Frequency'})  # Set y-axis label to "Frequency"
+
+# Add value labels on top of each bar
 age_group_bar.update_traces(text=age_group_count.values, textposition='outside')
+
+# Optional: increase size if needed
+age_group_bar.update_layout(width=1000, height=700)
 
 # Pie chart for Age Group Distribution
 pie_chart_age = px.pie(age_group_count, names=age_group_count.index, values=age_group_count.values,
