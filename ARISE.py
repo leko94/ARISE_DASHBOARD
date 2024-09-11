@@ -62,7 +62,7 @@ data['age_group'] = pd.cut(data['A1'], bins=bins, labels=labels, right=False)
 age_group_count = data['age_group'].value_counts().sort_index()
 age_group_bar = px.bar(age_group_count, x=age_group_count.index, y=age_group_count.values,
                        title='The Adolescence Participated Age Group',
-                       labels={'x': 'Age Group', 'y': 'Count'})
+                       labels={'x': 'Age Group', 'y': 'Frequency'})
 age_group_bar.update_traces(text=age_group_count.values, textposition='outside')
 
 # Pie chart for Age Group Distribution
