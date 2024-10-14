@@ -15,7 +15,7 @@ server = app.server  # Expose the server for WSGI
 logging.basicConfig(level=logging.DEBUG)
 
 # Load your CSV dataset
-data = pd.read_csv('Nutrint_ZA 11102024.csv')
+data = pd.read_csv('Nutrint_ZA 14102024.csv')
 
 # Paths for images - make sure your images are placed in the 'assets' folder
 logo1_path = '/assets/logo1.png'
@@ -34,7 +34,7 @@ hh_num_count = data['hh_num'].count()
 gauge1 = go.Figure(go.Indicator(
     mode="gauge+number",
     value=hh_num_count,
-    title={'text': "Total Number of Household Contacted"},
+    title={'text': "Total Number of Household Contaced and had Completed Interviews"},
     gauge={'axis': {'range': [0, 1500]}},
     number={'valueformat': ','}
 ))
@@ -44,7 +44,7 @@ consent_check_count = data['consent_check'].count()
 gauge2 = go.Figure(go.Indicator(
     mode="gauge+number",
     value=consent_check_count,
-    title={'text': "Total Number of Household who gave Consent"},
+    title={'text': "Total Number of Household who gave Consent to Complete an Interview"},
     gauge={'axis': {'range': [0, 1500]}},
     number={'valueformat': ','}
 ))
