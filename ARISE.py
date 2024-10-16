@@ -34,7 +34,7 @@ hh_num_count = data['hh_num'].count()
 gauge1 = go.Figure(go.Indicator(
     mode="gauge+number",
     value=hh_num_count,
-    title={'text': "Total Number of Household Contaced and had Completed Interviews"},
+    title={'text': "Total Number of Household Contacted and had Completed Interviews"},
     gauge={'axis': {'range': [0, 1500]}},
     number={'valueformat': ','}
 ))
