@@ -14,7 +14,7 @@ server = app.server  # Expose the server for WSGI
 logging.basicConfig(level=logging.DEBUG)
 
 # Load your CSV dataset
-data = pd.read_csv('/content/Nutrint_ZA (21).csv')
+data = pd.read_csv('Nutrint_ZA.csv')
 
 # Paths for images - make sure your images are placed in the 'assets' folder
 logo1_path = '/assets/logo1.png'
