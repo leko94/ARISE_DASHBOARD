@@ -14,7 +14,7 @@ server = app.server  # Expose the server for WSGI
 logging.basicConfig(level=logging.DEBUG)
 
 # Load your CSV dataset
-data = pd.read_csv('DASH_ZA.csv')
+data = pd.read_csv('/content/Nutrint_ZA (21).csv')
 
 # Paths for images - make sure your images are placed in the 'assets' folder
 logo1_path = '/assets/logo1.png'
@@ -34,7 +34,7 @@ gauge1 = go.Figure(go.Indicator(
     mode="gauge+number",
     value=hh_num_count,
     title={'text': "Total Number of Household Contacted and had Completed Interviews"},
-    gauge={'axis': {'range': [0, 1500]}, 'bar': {'color': '#1E90FF'}},  # Dodger Blue
+    gauge={'axis': {'range': [0, 1500]}, 'bar': {'color': '#FF4500'}},  # Orange Red
     number={'valueformat': ','}
 ))
 
@@ -44,14 +44,14 @@ gauge2 = go.Figure(go.Indicator(
     mode="gauge+number",
     value=consent_check_count,
     title={'text': "Total Number of Household who gave Consent to Complete an Interview"},
-    gauge={'axis': {'range': [0, 1500]}, 'bar': {'color': '#32CD32'}},  # Lime Green
+    gauge={'axis': {'range': [0, 1500]}, 'bar': {'color': '#8A2BE2'}},  # Blue Violet
     number={'valueformat': ','}
 ))
 
 # Pie chart for Gender Distribution
 gender_distribution = data['A2'].map({1: 'Male', 2: 'Female'}).value_counts()
 pie_chart_gender = px.pie(gender_distribution, names=gender_distribution.index, values=gender_distribution.values,
-                          title='Gender Distribution', color_discrete_sequence=['#FF6347', '#4682B4'])  # Tomato and Steel Blue
+                          title='Gender Distribution', color_discrete_sequence=['#FF7F50', '#5F9EA0'])  # Coral and Cadet Blue
 pie_chart_gender.update_traces(text=gender_distribution.values, textposition='inside')
 
 if 'A1' in data.columns:
@@ -69,7 +69,7 @@ if 'A1' in data.columns:
                            y=age_group_count.values,
                            title='The Adolescence Participated Age Group',
                            labels={'x': 'Age Group', 'y': 'Frequency'},
-                           color_discrete_sequence=['#FFD700'])  # Gold color
+                           color_discrete_sequence=['#8FBC8F'])  # Dark Sea Green
 
     # Add value labels on top of each bar
     age_group_bar.update_traces(text=age_group_count.values, textposition='outside')
@@ -79,7 +79,7 @@ if 'A1' in data.columns:
 
 # Pie chart for Age Group Distribution
 pie_chart_age = px.pie(age_group_count, names=age_group_count.index, values=age_group_count.values,
-                       title='Age Group Distribution', color_discrete_sequence=['#FFB6C1', '#FFE4B5', '#98FB98'])  # Light Pink, Lemon Chiffon, and Pale Green
+                       title='Age Group Distribution', color_discrete_sequence=['#DDA0DD', '#FA8072', '#ADD8E6'])  # Plum, Salmon, and Light Blue
 pie_chart_age.update_traces(text=age_group_count.values, textposition='inside')
 
 # Map the gender values
@@ -94,7 +94,7 @@ bar_chart_age_gender = px.bar(age_gender_distribution, x='age_group', y='count',
                               title='Gender Distribution by Age Group',
                               labels={'age_group': 'Age Group', 'count': 'Frequency', 'gender': 'Gender'},
                               barmode='group',
-                              color_discrete_map={'Male': '#6495ED', 'Female': '#FF69B4'})  # Cornflower Blue and Hot Pink
+                              color_discrete_map={'Male': '#4682B4', 'Female': '#FF69B4'})  # Steel Blue and Hot Pink
 
 # Add the actual count on top of each bar
 bar_chart_age_gender.update_traces(texttemplate='%{y}', textposition='outside')
@@ -111,11 +111,11 @@ bar_chart_age_gender.update_layout(
 progress_line_data = data.groupby('dc_name')['hh_num'].count().reset_index()
 progress_line = px.line(progress_line_data, x='dc_name', y='hh_num', title='Progress of Household Contacted by Data Collectors',
                         labels={'dc_name': 'Data Collectors Name', 'hh_num': 'Households Contacted'},
-                        color_discrete_sequence=['#6A5ACD'])  # Slate Blue
+                        color_discrete_sequence=['#FF1493'])  # Deep Pink
 progress_line.update_traces(text=progress_line_data['hh_num'], textposition='top center')
 
 # Bar Graph for HB Test Agreement with corrected x-axis label
-hb_test_agreement = data['J3_check'].map({1: 'No', 2: 'Yes'}).value_counts()
+hb_test_agreement = data['I3_check'].map({1: 'No', 2: 'Yes'}).value_counts()
 hb_test_agreement_df = hb_test_agreement.reset_index()  # Create a DataFrame for the bar graph
 
 # Rename columns for clarity
@@ -124,7 +124,7 @@ hb_test_agreement_df.columns = ['HB Agreement', 'Frequency']
 bar_graph_hb_test = px.bar(hb_test_agreement_df, x='HB Agreement', y='Frequency',
                             title='The Adolescents that Agreed to Take the HB Test and Those Who Did Not Agree',
                             labels={'HB Agreement': 'HB Agreement', 'Frequency': 'Frequency'},
-                            color_discrete_sequence=['#FF4500', '#20B2AA'])  # Orange Red and Light Sea Green
+                            color_discrete_sequence=['#FF8C00', '#4682B4'])  # Dark Orange and Steel Blue
 bar_graph_hb_test.update_traces(text=hb_test_agreement_df['Frequency'].values, textposition='outside')
 
 # Adjust the x-axis title and increase the graph size
@@ -133,36 +133,12 @@ bar_graph_hb_test.update_layout(
     width=800,  # Increase the width
     height=700  # Increase the height
 )
-# Bar Graph for Skipping Rope vs Control
-filtered_data = data['lti_sr_group'].value_counts()[['skipping rope', 'control']]
 
-# Create the bar graph using Plotly
-bar_graph_sr_control = go.Figure(data=[
-    go.Bar(name='Skipping Rope', x=['Skipping Rope'], y=[filtered_data['skipping rope']], marker_color='#90EE90'),  # Light Green
-    go.Bar(name='Control', x=['Control'], y=[filtered_data['control']], marker_color='#FFB6C1')  # Light Pink
-])
 
-# Update the layout and titles
-bar_graph_sr_control.update_layout(
-    title="Skipping Rope vs Control Participants",
-    yaxis_title='Frequency',
-    xaxis_title='Participants',
-    width=800,
-    height=500
-)
 
-# Add the actual counts on top of each bar
-for i, count in enumerate(filtered_data):
-    bar_graph_sr_control.add_annotation(
-        x=['Skipping Rope', 'Control'][i],
-        y=count + 0.05,
-        text=str(count),
-        showarrow=False,
-        font=dict(size=14)
-    )
-
-# Layout of the Dash App (remains unchanged)
+# Layout of the Dash App
 app.layout = html.Div([
+    html.H1("Nutrint Dash Board", style={'text-align': 'center'}),
     top_bar,
     dcc.Graph(figure=gauge1),
     dcc.Graph(figure=gauge2),
@@ -172,7 +148,6 @@ app.layout = html.Div([
     dcc.Graph(figure=bar_chart_age_gender),
     dcc.Graph(figure=progress_line),
     dcc.Graph(figure=bar_graph_hb_test),
-    dcc.Graph(figure=bar_graph_sr_control)  # Added new bar graph for 'skipping rope' vs 'control'
 ])
 
 # Run the Dash app
